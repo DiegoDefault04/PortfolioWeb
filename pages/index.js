@@ -44,14 +44,17 @@ export default function Home() {
               <h1 className="text-4xl font-bold">
                 Hola!
               </h1>
+              <div></div>
               <p className="mt-3 text-lg">
-                Me llamo Diego Alberto Martinez Hernandez
+                Mi nombre es Diego Alberto Martinez Hernandez
               </p>
               <div className='bg-cyan-700 h-1 w-160'></div>
-              <p className="mt-3 text-lg">
-                <TypingSlider/>
-              </p>
-          </div>
+                <p className="mt-3 text-lg">
+                </p>
+                  <div>
+                    <TypingSlider />
+                  </div>
+              </div>
           {/* Componente del cubo 3D giratorio */}
           <div className="flex">
             <Cube rotation={rotationRef} />
