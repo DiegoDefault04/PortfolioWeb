@@ -6,6 +6,8 @@ First, run the development server:
 
 ```bash
 npm run dev
+# or (Acces for any IP in the local network)
+npx next dev -H 0.0.0.0 -p 3000
 # or
 yarn dev
 # or
