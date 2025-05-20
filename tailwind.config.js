@@ -22,7 +22,7 @@ module.exports = {
       keyframes: {
         typing: {
           'from': { width: '100%' },
-          '90%': { width: '0' },
+          '80%': { width: '0' },
           'to': { width: '0' }
         },
         cursor: {
@@ -31,7 +31,7 @@ module.exports = {
         },
       },
       animation: {
-        typing: 'typing 5s steps(16) infinite',
+        typing: 'typing 2.3s steps(16) infinite',
         cursor: 'cursor 1s infinite',
         slide: 'slide 5s infinite'
       }

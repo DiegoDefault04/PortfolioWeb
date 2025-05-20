@@ -1,28 +1,23 @@
 import Link from 'next/link';
 
-export default function Navbar() {
+export default function Navbar({ setCurrentSection }) {
   return (
     <nav className="p-4 w-full">
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center">
           <div>
-            <Link href="/">
+            <button onClick={() => setCurrentSection('home')}>
               <h2 className="text-white font-bold text-xl">DiegoM</h2>
-            </Link>
+            </button>
           </div>
-          <div className="flex justify-between items-center">
-            <Link href="/inicio">
-              <h2 className="text-white mr-2">Inicio</h2>
-            </Link>
-            <Link href="/mi">
-              <h2 className="text-white mr-2">Sobre Mi</h2>
-            </Link>
-            <Link href="/works">
-              <h2 className="text-white mr-2">Trabajos</h2>
-            </Link>
-            <Link href="/contact">
-              <h2 className="text-white mr-2">Contacto</h2>
-            </Link>
+          <div className="flex justify-between items-center space-x-4">
+            <button onClick={() => setCurrentSection('home')} className="text-white">
+              Inicio
+            </button>
+            <button onClick={() => setCurrentSection('about')} className="text-white hover:text-cyan-400 transition">
+              Sobre mí
+            </button>
+            {/* Si tienes más secciones, puedes agregar más botones aquí */}
           </div>
         </div>
       </div>
