@@ -6,6 +6,7 @@ import TypingSlider from "@/components/TypingSlider";
 
 const Cube = dynamic(() => import("@/components/Cube"), { ssr: false });
 const AboutMe = dynamic(() => import("./AboutMe"), { ssr: false });
+const Works = dynamic(() => import("./Works"), { ssr: false });
 
 export default function Home() {
   const rotationRef = useRef({ x: 0, y: 0 });
@@ -35,9 +36,14 @@ export default function Home() {
 
       if (e.deltaY > 0 && currentSection === "home") {
         setCurrentSection("about");
+      } else if (e.deltaY > 0 && currentSection === "about") {
+        setCurrentSection("work");
+      } else if (e.deltaY < 0 && currentSection === "work") {
+        setCurrentSection("about");
       } else if (e.deltaY < 0 && currentSection === "about") {
         setCurrentSection("home");
       }
+
 
       isThrottled = true;
       setTimeout(() => {
@@ -59,8 +65,17 @@ export default function Home() {
       <main className="relative flex-1 text-white w-full">
         {/* Cubo siempre visible, animado */}
         <div
-          className={`fixed top-1/2 right-10 transform -translate-y-1/2 transition-transform duration-700 ease-in-out z-30
-    ${currentSection === "about" ? "-translate-x-[800px]" : "translate-x-0"}`}
+          className={`fixed right-10 z-30 transition-all duration-700 ease-in-out transform
+        ${
+      currentSection === "work"
+        ? "-translate-y-[200vh] opacity-0" // Slide up y desvanecimiento
+        : currentSection === "about"
+        ? "-translate-x-[1000px] -translate-y-100 opacity-100" // Slide lateral para "about"
+        : "translate-x-0 -translate-y-1/2 opacity-100" // Visible en home
+    }
+    sm:block hidden
+    `}
+    style={{ top: "50%" }}
         >
           <Cube rotation={rotationRef} />
         </div>
@@ -96,6 +111,16 @@ export default function Home() {
     }`}
         >
           <AboutMe />
+        </div>
+        <div
+          className={`absolute inset-0 transition-all duration-700 ease-in-out
+    ${
+      currentSection === "work"
+        ? "opacity-100 translate-y-0 z-20"
+        : "opacity-0 translate-y-10 z-10 pointer-events-none"
+    }`}
+        >
+          <Works />
         </div>
       </main>
 

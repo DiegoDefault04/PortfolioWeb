@@ -1,36 +1,42 @@
-const Cube = dynamic(() => import('@/components/Cube'), { ssr: false });
+'use client';
+import { useState } from 'react';
+import Image from 'next/image';
+import './Works.css';
 
-export default function Home() {
-  const rotationRef = useRef({ x: 0, y: 0 });
-  
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
+const images = [
+  "/1.jpg",
+  "/4.jpg",
+  "/23.webp",
+  "/3.jpg",
+  "/5.jpg",
+  "/20240612_192624.jpg"
+];
 
-      // Define cómo el scroll afecta la rotación
-      rotationRef.current.x = scrollY * 0.001; // Rota en el eje X
-      rotationRef.current.y = scrollY * 0.001; // Rota en el eje Y
-    };
-
-  }, []);
+export default function Works() {
+const [activeIndex, setActiveIndex] = useState(null);
 
   return (
-    <div className="flex flex-col min-h-screen bg-cool-gray-900">
-      <main className="flex-col text-white w-full">
+    <div className="flex flex-col items-center justify-center min-h-screen w-full bg-cool-gray-900 text-white px-4">
+      <h2 className="text-3xl font-bold mb-6">Trabajos</h2>
+      <ul className="gallery w-full">
+        {images.map((src, i) => (
+          <li
+            key={i}
+            className={`gallery__item ${activeIndex === i ? 'touch-zoom' : ''}`}
+            onTouchStart={() => setActiveIndex(i)}
+            onTouchEnd={() => setTimeout(() => setActiveIndex(null), 300)}
+          >
+            <Image
+              src={src}
+              alt={`Trabajo ${i + 1}`}
+              width={800}
+              height={600}
+              className="gallery__img"
+            />
+          </li>
+        ))}
+      </ul>
 
-        {/* Sección principal */}
-        <div className="flex flex-row items-center justify-center min-h-screen">
-          {/* Componente del cubo 3D */}
-          <div className="flex flex-row items-center justify-center min-h-screen">
-            <Cube rotation={rotationRef} />
-          </div>
-        </div>
-
-      </main>
-
-      <footer className="w-full h-12 flex justify-center items-center bg-gray-900">
-        <p className="text-sm text-white">DiegoM</p>
-      </footer>
     </div>
   );
 }
