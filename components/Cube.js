@@ -2,6 +2,8 @@
 import { Canvas } from '@react-three/fiber';
 import { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
+import { OrbitControls } from '@react-three/drei';
+import Model from './Model';
 
 function RotatingCube() {
   const cubeRef = useRef();
@@ -24,7 +26,9 @@ export default function Cube() {
   return (
     <Canvas style={{ height: 400, width: 400 }}>
       <ambientLight />
-      <RotatingCube />
+      <directionalLight position={[10, 10, 5]} intensity={1} />
+      <Model path="/dji-air-3/source/air3.glb" />
+      <OrbitControls />
     </Canvas>
   );
 }
