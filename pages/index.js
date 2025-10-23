@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import "tailwindcss/tailwind.css";
 import Navbar from "@/components/Navbar";
 import TypingSlider from "@/components/TypingSlider";
+import ASCIIcanvas from "@/components/Asciicanvas";
 
 const Cube = dynamic(() => import("@/components/Cube"), { ssr: false });
 const AboutMe = dynamic(() => import("./AboutMe"), { ssr: false });
@@ -59,11 +60,11 @@ export default function Home() {
   }, [currentSection]);
 
   return (
-    <div className="flex flex-col h-screen overflow-hidden bg-cool-gray-900">
+    <div className="flex flex-col h-screen overflow-hidden">
       <Navbar setCurrentSection={setCurrentSection} />
-
+              <ASCIIcanvas/>
       <main className="relative flex-1 text-white w-full">
-        {/* Cubo siempre visible, animado */}
+        {/* Cubo siempre visible, animado 
         <div
           className={`fixed right-10 z-30 transition-all duration-700 ease-in-out transform
         ${
@@ -78,7 +79,7 @@ export default function Home() {
     style={{ top: "50%" }}
         >
           <Cube rotation={rotationRef} />
-        </div>
+        </div>*/}
 
         {/* Sección INICIO */}
         <div
@@ -124,7 +125,7 @@ export default function Home() {
         </div>
       </main>
 
-      <footer className="w-full h-12 flex justify-center items-center bg-gray-900">
+      <footer className="w-full h-12 flex justify-center items-center">
         <p className="text-sm text-white">DiegoM</p>
       </footer>
     </div>

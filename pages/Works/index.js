@@ -16,7 +16,7 @@ export default function Works() {
 const [activeIndex, setActiveIndex] = useState(null);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen w-full bg-cool-gray-900 text-white px-4">
+    <div className="flex flex-col items-center justify-center min-h-screen w-full text-white px-4">
       <h2 className="text-3xl font-bold mb-6">Trabajos</h2>
       <ul className="gallery w-full">
         {images.map((src, i) => (

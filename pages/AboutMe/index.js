@@ -2,7 +2,7 @@ import { FaGithub, FaLinkedin, FaInstagram, FaTiktok } from "react-icons/fa";
 
 export default function AboutMe() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-cool-gray-900 text-white px-4 py-10">
+    <div className="flex flex-col items-center justify-center min-h-screen text-white px-4 py-10">
       <h2 className="text-3xl font-bold mb-4">Sobre mí</h2>
       <p className="max-w-xl text-center mb-10">
         No hace falta seguirme por todos lados, aunque si te interesa ver

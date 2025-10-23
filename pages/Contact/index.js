@@ -15,7 +15,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen bg-cool-gray-900">
+    <div className="flex flex-col min-h-screen">
       <main className="flex-col text-white w-full">
 
         {/* Sección principal */}
