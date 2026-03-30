@@ -2,84 +2,74 @@ import { useRef, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import "tailwindcss/tailwind.css";
 import Navbar from "@/components/Navbar";
-import TypingSlider from "@/components/TypingSlider";
-import ASCIIcanvas from "@/components/Asciicanvas";
+import LiquidBackground from "@/components/LiquidBackground";
 
-const Cube = dynamic(() => import("@/components/Cube"), { ssr: false });
 const AboutMe = dynamic(() => import("./AboutMe"), { ssr: false });
 const Works = dynamic(() => import("./Works"), { ssr: false });
+const NeuralProjects = dynamic(() => import("./projects/Neuralprojects"), { ssr: false });
 
 export default function Home() {
   const rotationRef = useRef({ x: 0, y: 0 });
   const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
   const [currentSection, setCurrentSection] = useState("home"); // Nueva gestión de sección
+  const [visible, setVisible] = useState(true);
 
   const phrases = [
-    "Full Stack Developer 👨‍💻",
-    "Fotógrafo Novato 📸",
-    "Backend Developer 🖥️",
+    "IA Developer",
+    "Fotógrafo 📸",
+    "Data Developer 🖥️",
     "Amante de los tacos 🌮",
   ];
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentPhraseIndex((prevIndex) => (prevIndex + 1) % phrases.length);
-    }, 3000);
+      setVisible(false); // fade out
+
+      setTimeout(() => {
+        setCurrentPhraseIndex((prev) => (prev + 1) % phrases.length);
+        setVisible(true); // fade in
+      }, 300); // duración del fade
+    }, 1500);
 
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    let isThrottled = false;
 
-    const handleWheel = (e) => {
-      if (isThrottled) return;
+const sections = ["home", "about", "projects", "work"];
 
-      if (e.deltaY > 0 && currentSection === "home") {
-        setCurrentSection("about");
-      } else if (e.deltaY > 0 && currentSection === "about") {
-        setCurrentSection("work");
-      } else if (e.deltaY < 0 && currentSection === "work") {
-        setCurrentSection("about");
-      } else if (e.deltaY < 0 && currentSection === "about") {
-        setCurrentSection("home");
-      }
+useEffect(() => {
+  let isThrottled = false;
 
+  const handleWheel = (e) => {
+    if (isThrottled) return;
 
-      isThrottled = true;
-      setTimeout(() => {
-        isThrottled = false;
-      }, 1000); // evita cambiar de sección demasiado rápido
-    };
+    const currentIndex = sections.indexOf(currentSection);
 
-    window.addEventListener("wheel", handleWheel, { passive: true });
+    if (e.deltaY > 0 && currentIndex < sections.length - 1) {
+      setCurrentSection(sections[currentIndex + 1]);
+    } else if (e.deltaY < 0 && currentIndex > 0) {
+      setCurrentSection(sections[currentIndex - 1]);
+    }
 
-    return () => {
-      window.removeEventListener("wheel", handleWheel);
-    };
-  }, [currentSection]);
+    isThrottled = true;
+    setTimeout(() => {
+      isThrottled = false;
+    }, 1000);
+  };
+
+  window.addEventListener("wheel", handleWheel, { passive: true });
+
+  return () => {
+    window.removeEventListener("wheel", handleWheel);
+  };
+}, [currentSection]);
+
 
   return (
     <div className="flex flex-col h-screen overflow-hidden">
       <Navbar setCurrentSection={setCurrentSection} />
-              <ASCIIcanvas/>
       <main className="relative flex-1 text-white w-full">
-        {/* Cubo siempre visible, animado 
-        <div
-          className={`fixed right-10 z-30 transition-all duration-700 ease-in-out transform
-        ${
-      currentSection === "work"
-        ? "-translate-y-[200vh] opacity-0" // Slide up y desvanecimiento
-        : currentSection === "about"
-        ? "-translate-x-[1000px] -translate-y-100 opacity-100" // Slide lateral para "about"
-        : "translate-x-0 -translate-y-1/2 opacity-100" // Visible en home
-    }
-    sm:block hidden
-    `}
-    style={{ top: "50%" }}
-        >
-          <Cube rotation={rotationRef} />
-        </div>*/}
+          <LiquidBackground />
 
         {/* Sección INICIO */}
         <div
@@ -92,12 +82,44 @@ export default function Home() {
         >
           <div className="flex flex-row items-center justify-center w-full">
             <div className="flex flex-col items-center justify-center w-1/2">
-              <h1 className="text-4xl font-bold">Hola!</h1>
+              <div style={{ position: "relative", textAlign: "center" }}>
+                {/* glow detrás del nombre */}
+                <div style={{
+                  position: "absolute",
+                  inset: 0,
+                  background: "radial-gradient(ellipse at center, #7F77DD22 0%, transparent 70%)",
+                  filter: "blur(24px)",
+                  transform: "scaleX(1.4) scaleY(2)",
+                  pointerEvents: "none",
+                }} />
+                <h1
+                  className="text-5xl md:text-5xl font-bold tracking-tight relative"
+                  style={{
+                    background: "linear-gradient(135deg, #fff 40%, rgba(127,119,221,0.7) 100%)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                    paddingBottom: "0.15em", // ← esto rescata los descendentes (g, y, p)
+                  }}
+                >
+                  Diego Alberto Martinez
+                </h1>
+              </div>
               <p className="mt-3 text-lg">
-                Mi nombre es Diego Alberto Martinez Hernandez
               </p>
-              <div className="bg-cyan-700 h-1 w-full my-4"></div>
-              <TypingSlider />
+              <div className="h-10 mt-4 flex items-center justify-center overflow-hidden">
+                <span
+                  className={`text-xl font-medium transition-all duration-500 ease-in-out
+                  ${
+                    visible
+                      ? "opacity-100 translate-y-0 scale-100 blur-0"
+                      : "opacity-0 translate-y-6 scale-75 blur-sm"
+                  }`}
+                >
+                  {phrases[currentPhraseIndex]}
+                </span>
+              </div>
+                            <div className="bg-cyan-700 h-1 w-full my-4"></div>
             </div>
           </div>
         </div>
@@ -113,6 +135,25 @@ export default function Home() {
         >
           <AboutMe />
         </div>
+
+        {/* Sección PROYECTOS */}
+        <div
+          className={`absolute inset-0 transition-all duration-700 ease-in-out
+          ${
+            currentSection === "projects"
+              ? "opacity-100 translate-y-0 z-20"
+              : "opacity-0 translate-y-10 z-10 pointer-events-none"
+          }`}
+        >
+          <div className="w-full h-full flex flex-col items-center justify-center gap-10">
+            
+
+            <NeuralProjects />
+
+          </div>
+        </div>
+
+
         <div
           className={`absolute inset-0 transition-all duration-700 ease-in-out
     ${
