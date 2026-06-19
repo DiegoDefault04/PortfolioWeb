@@ -17,8 +17,11 @@ export default function Navbar({ setCurrentSection }) {
             <button onClick={() => setCurrentSection('about')} className="text-white hover:text-cyan-400 transition">
               Sobre mí
             </button>
+            <button onClick={() => setCurrentSection('projects')} className="text-white hover:text-cyan-400 transition">
+              Proyectos
+            </button>
             <button onClick={() => setCurrentSection('work')} className="text-white hover:text-cyan-400 transition">
-              Fotos
+              Galeria
             </button>
           </div>
         </div>

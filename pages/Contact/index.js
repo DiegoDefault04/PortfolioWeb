@@ -1,5 +1,5 @@
 const Cube = dynamic(() => import('@/components/Cube'), { ssr: false });
-
+import dynamic from 'next/dynamic';
 export default function Home() {
   const rotationRef = useRef({ x: 0, y: 0 });
   
